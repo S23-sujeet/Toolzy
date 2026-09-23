@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && tsx scripts/prerender-seo.mts",
     "lint": "oxlint",
     "preview": "vite preview",
     "test:pdf-lib": "tsx scripts/verify-pdf-lib.mts",
