@@ -507,3 +507,33 @@ export function DiceIcon(props: IconProps) {
     </svg>
   );
 }
+
+export function CutoutIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <rect x="3" y="4" width="18" height="16" rx="2" />
+      <circle cx="12" cy="10" r="2.4" strokeDasharray="2.4 2.2" />
+      <path d="M7.5 17c.7-2.8 2.4-4.3 4.5-4.3s3.8 1.5 4.5 4.3" strokeDasharray="2.4 2.2" />
+    </svg>
+  );
+}
+
+export function KeyboardIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <rect x="2.5" y="6" width="19" height="12" rx="2" />
+      <path d="M6 10h.01M9.5 10h.01M13 10h.01M16.5 10h.01M6 13.5h.01M9.5 13.5h.01M13 13.5h.01M16.5 13.5h.01" strokeWidth={2.4} />
+      <path d="M6.5 16.5h11" strokeWidth={2.2} />
+    </svg>
+  );
+}
+
+export function ScreenRecordIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <rect x="3" y="4" width="18" height="13" rx="1.5" />
+      <path d="M8.5 20.5h7M12 17v3.5" />
+      <circle cx="12" cy="10.5" r="2.6" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
