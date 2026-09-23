@@ -13,6 +13,16 @@ function formatDuration(totalSeconds: number): string {
   return `${minutes}:${seconds}`;
 }
 
+// Mobile OSes don't expose a screen-capture API to web pages, so getDisplayMedia is always missing there.
+function detectMobilePlatform(): 'ios' | 'android' | null {
+  if (typeof navigator === 'undefined') return null;
+  const ua = navigator.userAgent;
+  if (/Android/i.test(ua)) return 'android';
+  // iPadOS reports its UA as "Macintosh" but, unlike a real Mac, exposes multi-touch.
+  if (/iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1)) return 'ios';
+  return null;
+}
+
 export default function ScreenRecorder() {
   const isSupported = typeof navigator !== 'undefined' && Boolean(navigator.mediaDevices?.getDisplayMedia) && typeof MediaRecorder !== 'undefined';
 
@@ -106,9 +116,36 @@ export default function ScreenRecorder() {
   };
 
   if (!isSupported) {
+    const mobilePlatform = detectMobilePlatform();
     return (
       <ToolLayout title="Screen Recorder" description="Record your screen and download it as a video." path="/tools/screen-recorder" icon={ScreenRecordIcon}>
-        <p className="text-sm text-red-600">Screen recording isn't supported in this browser. Try the latest Chrome, Edge or Firefox on desktop.</p>
+        <p className="text-sm text-red-600">
+          {mobilePlatform
+            ? "Mobile browsers don't let websites capture the screen, so this tool only works on desktop."
+            : "Screen recording isn't supported in this browser. Try the latest Chrome, Edge or Firefox on desktop."}
+        </p>
+        {mobilePlatform === 'ios' && (
+          <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4">
+            <h2 className="font-semibold text-slate-800">Use your iPhone/iPad's built-in recorder instead</h2>
+            <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-slate-600">
+              <li>Open Control Center (swipe down from the top-right corner, or up from the bottom edge on older iPhones).</li>
+              <li>Tap the Screen Recording button (a solid dot inside a ring).</li>
+              <li>Wait for the 3-second countdown, then use your device as normal.</li>
+              <li>Tap the red status bar at the top to stop - the video saves to your Photos app.</li>
+            </ol>
+          </div>
+        )}
+        {mobilePlatform === 'android' && (
+          <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4">
+            <h2 className="font-semibold text-slate-800">Use your Android's built-in recorder instead</h2>
+            <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-slate-600">
+              <li>Swipe down twice from the top of the screen to open Quick Settings.</li>
+              <li>Tap Screen Record (tap the pencil/edit icon to add the tile if you don't see it).</li>
+              <li>Choose what to record and tap Start.</li>
+              <li>Stop it from the notification shade when you're done - the video saves to your gallery.</li>
+            </ol>
+          </div>
+        )}
       </ToolLayout>
     );
   }
