@@ -10,6 +10,7 @@ import {
   CompressIcon,
   CookingIcon,
   CurrencyIcon,
+  CutoutIcon,
   DiceIcon,
   DiffIcon,
   DocTextIcon,
@@ -21,6 +22,7 @@ import {
   IdCardIcon,
   ImageIcon,
   InfoIcon,
+  KeyboardIcon,
   KeyIcon,
   LinkIcon,
   ListIcon,
@@ -35,6 +37,7 @@ import {
   RotateIcon,
   RulerIcon,
   ScaleIcon,
+  ScreenRecordIcon,
   SpeedIcon,
   SplitIcon,
   StorageIcon,
@@ -727,6 +730,15 @@ export const TOOLS: ToolDefinition[] = [
   },
   {
     slug: 'pdf-fill-sign', name: 'PDF Fill and Sign', description: 'Add text to the first page of a PDF and download it locally.', icon: PdfDocIcon, section: 'pdf-toolkit', pdfCategory: 'edit',
+  },
+  {
+    slug: 'background-remover', name: 'Background Remover', description: 'Remove the background from a photo and download a transparent PNG using on-device AI.', icon: CutoutIcon, section: 'image-tools',
+  },
+  {
+    slug: 'typing-speed-test', name: 'Typing Speed Test', description: 'Measure your typing speed in words per minute and accuracy.', icon: KeyboardIcon, section: 'productivity-tools',
+  },
+  {
+    slug: 'screen-recorder', name: 'Screen Recorder', description: 'Record your screen and microphone and download the video - nothing is uploaded.', icon: ScreenRecordIcon, section: 'productivity-tools',
   },
 ];
 

@@ -67,6 +67,10 @@ const RandomGenerator = lazy(() => import('./pages/tools/RandomGenerator'));
 const ImageResizer = lazy(() => import('./pages/tools/ImageResizer'));
 const ImageConverter = lazy(() => import('./pages/tools/ImageConverter'));
 const ImageCompressor = lazy(() => import('./pages/tools/ImageCompressor'));
+const BackgroundRemover = lazy(() => import('./pages/tools/BackgroundRemover'));
+
+const TypingSpeedTest = lazy(() => import('./pages/tools/TypingSpeedTest'));
+const ScreenRecorder = lazy(() => import('./pages/tools/ScreenRecorder'));
 
 function NotFound() {
   return (
@@ -162,6 +166,10 @@ export default function App() {
             <Route path="/tools/image-resizer" element={<ImageResizer />} />
             <Route path="/tools/image-converter" element={<ImageConverter />} />
             <Route path="/tools/image-compressor" element={<ImageCompressor />} />
+            <Route path="/tools/background-remover" element={<BackgroundRemover />} />
+
+            <Route path="/tools/typing-speed-test" element={<TypingSpeedTest />} />
+            <Route path="/tools/screen-recorder" element={<ScreenRecorder />} />
 
             {([
               'code-formatter', 'sql-formatter', 'regex-tester', 'jwt-decoder', 'timestamp-converter',
