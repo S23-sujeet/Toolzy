@@ -64,21 +64,32 @@ export default function Home() {
       />
       {/* Hero */}
       <section className="bg-hero-mesh relative overflow-hidden border-b border-slate-200 bg-white">
-        <div className="mx-auto max-w-6xl px-4 py-20 text-center sm:py-28">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-50 px-3.5 py-1.5 text-xs font-semibold text-brand-700 ring-1 ring-inset ring-brand-600/10">
+        <div className="animate-float pointer-events-none absolute -top-16 -left-16 h-64 w-64 rounded-full bg-brand-400/10 blur-3xl sm:h-80 sm:w-80" />
+        <div
+          className="animate-float pointer-events-none absolute top-10 -right-16 h-64 w-64 rounded-full bg-sky-400/10 blur-3xl sm:h-80 sm:w-80"
+          style={{ animationDelay: '1.5s' }}
+        />
+        <div className="relative mx-auto max-w-6xl px-4 py-16 text-center sm:py-24 lg:py-28">
+          <span className="animate-fade-up inline-flex items-center gap-1.5 rounded-full bg-brand-50 px-3.5 py-1.5 text-xs font-semibold text-brand-700 ring-1 ring-inset ring-brand-600/10">
             <SparklesIcon className="h-3.5 w-3.5" />
             No sign-up. No uploads. No limits.
           </span>
-          <h1 className="mx-auto mt-6 max-w-3xl text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
+          <h1
+            className="animate-fade-up mx-auto mt-6 max-w-3xl text-3xl font-extrabold tracking-tight text-balance text-slate-900 sm:text-5xl md:text-6xl"
+            style={{ animationDelay: '0.05s' }}
+          >
             Every everyday tool you need, <span className="text-brand-600">in one place</span>
           </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-slate-500">
+          <p
+            className="animate-fade-up mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-500 sm:text-lg"
+            style={{ animationDelay: '0.1s' }}
+          >
             Free PDF tools, everyday converters, calculators, text utilities and number tools, all running privately
             in your browser. No sign-up and no uploads.
           </p>
 
           {/* Search is the fastest path to any tool. */}
-          <div className="mx-auto mt-8 max-w-xl">
+          <div className="animate-fade-up mx-auto mt-8 max-w-xl" style={{ animationDelay: '0.15s' }}>
             <div className="relative">
               <SearchIcon className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
               <input
@@ -86,28 +97,31 @@ export default function Home() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={`Search ${TOTAL_TOOL_COUNT} tools... e.g. "merge pdf", "BMI", "currency"`}
-                className="w-full rounded-2xl border border-slate-200 bg-white py-4 pr-4 pl-12 text-base text-slate-800 shadow-lg shadow-slate-900/5 transition focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20"
+                className="w-full rounded-2xl border border-slate-200 bg-white py-3.5 pr-4 pl-12 text-base text-slate-800 shadow-premium-lg transition focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 sm:py-4"
               />
             </div>
           </div>
 
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div
+            className="animate-fade-up mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"
+            style={{ animationDelay: '0.2s' }}
+          >
             <a
               href="#tools"
-              className="w-full rounded-xl bg-gradient-to-r from-brand-600 to-brand-500 px-7 py-3.5 font-semibold text-white shadow-lg shadow-brand-600/25 transition hover:from-brand-700 hover:to-brand-600 sm:w-auto"
+              className="w-full rounded-xl bg-gradient-to-r from-brand-600 to-brand-500 px-7 py-3.5 font-semibold text-white shadow-lg shadow-brand-600/25 transition hover:-translate-y-0.5 hover:from-brand-700 hover:to-brand-600 hover:shadow-xl sm:w-auto"
             >
               Browse all tools
             </a>
             <Link
               to="/tools/merge-pdf"
-              className="flex w-full items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-7 py-3.5 font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 sm:w-auto"
+              className="flex w-full items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-7 py-3.5 font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50 hover:shadow-md sm:w-auto"
             >
               <MergeIcon className="h-4.5 w-4.5" />
               Try Merge PDF
             </Link>
           </div>
 
-          <div className="mx-auto mt-14 grid max-w-3xl grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-4">
+          <div className="mx-auto mt-12 grid max-w-3xl grid-cols-2 gap-x-6 gap-y-5 sm:mt-14 sm:grid-cols-4">
             {TRUST_POINTS.map(({ icon: Icon, label }) => (
               <div key={label} className="flex flex-col items-center gap-2 text-center">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-brand-600 shadow-sm ring-1 ring-slate-100">
@@ -183,7 +197,7 @@ export default function Home() {
             </div>
 
             {/* Browse by category - every section gets the exact same card treatment, PDF Toolkit included */}
-            <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4">
               {SECTIONS.map((section) => (
                 <CategoryCard key={section.id} section={section} toolCount={getToolsBySection(section.id).length} />
               ))}
@@ -201,7 +215,10 @@ export default function Home() {
           </div>
           <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-3">
             {STEPS.map((step, index) => (
-              <div key={step.title} className="relative rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm">
+              <div
+                key={step.title}
+                className="relative rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-premium"
+              >
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand-600 px-2.5 py-0.5 text-xs font-bold text-white shadow">
                   {index + 1}
                 </span>
@@ -224,7 +241,7 @@ export default function Home() {
         </div>
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
           {TESTIMONIALS.map((t) => (
-            <div key={t.name} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div key={t.name} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-premium">
               <div className="flex gap-0.5 text-amber-400">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <StarIcon key={i} className="h-4 w-4" />
@@ -251,7 +268,8 @@ export default function Home() {
 
       {/* CTA */}
       <section className="mx-auto max-w-6xl px-4 pb-20">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-700 via-brand-600 to-brand-500 px-8 py-14 text-center shadow-xl">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-700 via-brand-600 to-brand-500 px-6 py-12 text-center shadow-xl sm:px-8 sm:py-14">
+          <div className="bg-dot-grid pointer-events-none absolute inset-0 opacity-50" />
           <div className="pointer-events-none absolute -top-16 -right-16 h-56 w-56 rounded-full bg-white/10" />
           <div className="pointer-events-none absolute -bottom-20 -left-10 h-56 w-56 rounded-full bg-white/10" />
           <h2 className="relative text-2xl font-bold text-white sm:text-3xl">Help keep Toolzy free</h2>

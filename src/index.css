@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -14,6 +14,31 @@
   --color-brand-700: #b91c1c;
   --color-brand-800: #991b1b;
   --color-brand-900: #7f1d1d;
+
+  --shadow-premium: 0 1px 2px rgba(15, 23, 42, 0.04), 0 12px 32px -12px rgba(15, 23, 42, 0.12);
+  --shadow-premium-lg: 0 4px 12px rgba(15, 23, 42, 0.06), 0 24px 48px -16px rgba(15, 23, 42, 0.18);
+
+  --animate-fade-up: fade-up 0.5s ease both;
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 html,
@@ -26,9 +51,48 @@ body {
   margin: 0;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  background-color: #ffffff;
 }
 
-/* Decorative gradient mesh used behind the hero section - pure CSS, no imagery. */
+/* Premium touches applied globally: refined selection, focus and scrollbar styling. */
+::selection {
+  background-color: var(--color-brand-100);
+  color: var(--color-brand-800);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-brand-300) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-brand-300);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-brand-400);
+  background-clip: content-box;
+}
+
+/* Decorative gradient mesh used behind hero/CTA sections - pure CSS, no imagery. */
 .bg-hero-mesh {
   background-image:
     radial-gradient(at 15% 20%, rgba(220, 38, 38, 0.12) 0, transparent 55%),
@@ -36,11 +100,8 @@ body {
     radial-gradient(at 50% 80%, rgba(220, 38, 38, 0.08) 0, transparent 45%);
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-.animate-float {
-  animation: float 5s ease-in-out infinite;
+/* Subtle dot-grid texture, used sparingly behind dark/premium surfaces. */
+.bg-dot-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+  background-size: 18px 18px;
 }
