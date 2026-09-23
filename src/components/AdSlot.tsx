@@ -1,5 +1,6 @@
 import { Component, useEffect, useRef, type ReactNode } from 'react';
 import { usePremium } from '../context/PremiumContext';
+import { useAdConsent } from '../context/AdConsentContext';
 
 const ADSENSE_CLIENT = import.meta.env.VITE_ADSENSE_CLIENT as string | undefined;
 let scriptLoadPromise: Promise<void> | null = null;
@@ -55,18 +56,22 @@ interface AdSlotProps {
 function AdUnit({ slotId, size = 'rectangle', className, label = 'Advertisement' }: AdSlotProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { isPremium } = usePremium();
+  const { consent } = useAdConsent();
   const dimensions = SIZE_STYLES[size];
 
   useEffect(() => {
-    if (isPremium || !ADSENSE_CLIENT) return;
+    // No ad request is made until the visitor accepts/rejects the cookie banner (see ConsentBanner).
+    if (isPremium || !ADSENSE_CLIENT || !consent) return;
     let cancelled = false;
 
     loadAdSenseScript(ADSENSE_CLIENT)
       .then(() => {
         if (cancelled) return;
         try {
+          const adsbygoogle = ((window as unknown as { adsbygoogle: { requestNonPersonalizedAds?: number } & unknown[] }).adsbygoogle ??= []);
+          adsbygoogle.requestNonPersonalizedAds = consent === 'non-personalized' ? 1 : 0;
           // Reserved space via CSS below prevents layout shift / overlap with tool UI.
-          ((window as unknown as { adsbygoogle: unknown[] }).adsbygoogle ??= []).push({});
+          adsbygoogle.push({});
         } catch (error) {
           console.warn('[AdSlot] adsbygoogle push failed:', error);
         }
@@ -76,10 +81,10 @@ function AdUnit({ slotId, size = 'rectangle', className, label = 'Advertisement'
     return () => {
       cancelled = true;
     };
-  }, [isPremium]);
+  }, [isPremium, consent]);
 
-  // Premium users (or missing config, e.g. local dev) never see ad markup at all.
-  if (isPremium || !ADSENSE_CLIENT) return null;
+  // Premium users, missing config (e.g. local dev), or no consent decision yet never see ad markup.
+  if (isPremium || !ADSENSE_CLIENT || !consent) return null;
 
   return (
     <div

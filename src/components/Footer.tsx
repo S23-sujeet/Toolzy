@@ -44,6 +44,17 @@ export default function Footer() {
 
         <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-slate-100 pt-6 text-xs text-slate-400 sm:flex-row">
           <p>&copy; {new Date().getFullYear()} Toolzy. All rights reserved.</p>
+          <nav className="flex items-center gap-4">
+            <Link to="/about" className="transition hover:text-brand-600">
+              About
+            </Link>
+            <Link to="/privacy" className="transition hover:text-brand-600">
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className="transition hover:text-brand-600">
+              Terms of Service
+            </Link>
+          </nav>
           <p>Built with React, pdf-lib &amp; pdf.js.</p>
         </div>
       </div>

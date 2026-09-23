@@ -2,8 +2,12 @@ import { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import ConsentBanner from './components/ConsentBanner';
 import Home from './pages/Home';
 import Premium from './pages/Premium';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
+import AboutUs from './pages/AboutUs';
 import CategoryHub from './pages/CategoryHub';
 import ExpandedTools, { type ExpandedToolKind } from './pages/tools/ExpandedTools';
 
@@ -94,6 +98,9 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/premium" element={<Premium />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/about" element={<AboutUs />} />
             <Route path="/pdf-toolkit" element={<CategoryHub section="pdf-toolkit" />} />
             <Route path="/everyday-conversions" element={<CategoryHub section="everyday-conversions" />} />
             <Route path="/calculators" element={<CategoryHub section="calculators" />} />
@@ -187,6 +194,7 @@ export default function App() {
         </Suspense>
       </main>
       <Footer />
+      <ConsentBanner />
     </div>
   );
 }

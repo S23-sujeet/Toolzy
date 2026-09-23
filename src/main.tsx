@@ -4,12 +4,15 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.tsx'
 import { PremiumProvider } from './context/PremiumContext.tsx'
+import { AdConsentProvider } from './context/AdConsentContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <PremiumProvider>
-        <App />
+        <AdConsentProvider>
+          <App />
+        </AdConsentProvider>
       </PremiumProvider>
     </BrowserRouter>
   </StrictMode>,
