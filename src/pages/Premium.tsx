@@ -1,7 +1,17 @@
+import { useMemo, useState } from 'react';
 import { CheckIcon, ShieldCheckIcon, SparklesIcon } from '../components/icons';
 import Seo from '../components/Seo';
 
-const SUPPORT_URL = (import.meta.env.VITE_SUPPORT_URL as string | undefined)?.trim();
+type Currency = 'USD' | 'INR';
+
+// Legacy single-currency var still supported as a USD fallback.
+const LEGACY_URL = (import.meta.env.VITE_SUPPORT_URL as string | undefined)?.trim();
+const SUPPORT_URLS: Record<Currency, string | undefined> = {
+  USD: (import.meta.env.VITE_SUPPORT_URL_USD as string | undefined)?.trim() || LEGACY_URL,
+  INR: (import.meta.env.VITE_SUPPORT_URL_INR as string | undefined)?.trim(),
+};
+
+const CURRENCY_LABELS: Record<Currency, string> = { USD: '$ USD', INR: 'INR' };
 
 const FEATURES = [
   'Keep every Toolzy tool free to use',
@@ -10,7 +20,31 @@ const FEATURES = [
   'Make future tools and improvements possible',
 ];
 
+// Best-effort locale guess (no network call) - user can still switch manually.
+function detectDefaultCurrency(): Currency {
+  try {
+    const locale = navigator.language ?? '';
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone ?? '';
+    if (locale.toLowerCase().endsWith('-in') || timeZone === 'Asia/Kolkata' || timeZone === 'Asia/Calcutta') {
+      return 'INR';
+    }
+  } catch {
+    // Intl APIs unavailable - fall through to default.
+  }
+  return 'USD';
+}
+
 export default function Premium() {
+  const availableCurrencies = useMemo(
+    () => (Object.keys(SUPPORT_URLS) as Currency[]).filter((c) => SUPPORT_URLS[c]),
+    [],
+  );
+  const [currency, setCurrency] = useState<Currency>(() => {
+    const guess = detectDefaultCurrency();
+    return SUPPORT_URLS[guess] ? guess : (availableCurrencies[0] ?? 'USD');
+  });
+  const supportUrl = SUPPORT_URLS[currency];
+
   return (
     <div className="bg-slate-50 py-16">
       <Seo
@@ -38,19 +72,38 @@ export default function Premium() {
           </ul>
 
           <div className="mt-8 border-t border-slate-100 pt-6">
-            {SUPPORT_URL ? (
+            {availableCurrencies.length > 1 && (
+              <div className="mb-4 flex justify-center gap-2">
+                {availableCurrencies.map((c) => (
+                  <button
+                    key={c}
+                    type="button"
+                    onClick={() => setCurrency(c)}
+                    className={`rounded-full px-4 py-1.5 text-sm font-semibold transition ${
+                      currency === c
+                        ? 'bg-brand-600 text-white shadow-sm'
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    }`}
+                  >
+                    {CURRENCY_LABELS[c]}
+                  </button>
+                ))}
+              </div>
+            )}
+            {supportUrl ? (
               <a
-                href={SUPPORT_URL}
+                href={supportUrl}
                 target="_blank"
                 rel="noreferrer"
                 className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-brand-600 to-brand-500 px-6 py-3.5 font-semibold text-white shadow-lg shadow-brand-600/25 transition hover:from-brand-700 hover:to-brand-600"
               >
                 <ShieldCheckIcon className="h-5 w-5" />
-                Support Toolzy
+                Support Toolzy ({CURRENCY_LABELS[currency]})
               </a>
             ) : (
               <p className="text-center text-sm text-slate-500">
-                Support payments are not configured yet. Add <code>VITE_SUPPORT_URL</code> before deploying.
+                Support payments are not configured yet. Add <code>VITE_SUPPORT_URL_USD</code> and/or{' '}
+                <code>VITE_SUPPORT_URL_INR</code> before deploying.
               </p>
             )}
           </div>
